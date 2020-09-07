@@ -14,9 +14,19 @@ find_package(Boost 1.58.0 REQUIRED)
 
 option(WITH_FREENECT2 "Enable freenect support" OFF)
 if(WITH_FREENECT2)
+    # Set cmake prefix path to enable cmake to find freenect2
+    set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} $ENV{HOME}/freenect2/lib/cmake/freenect2)
     find_package(freenect2 REQUIRED)
+
     add_definitions(-DWITH_FREENECT2)
+
     list(APPEND LIBRARIES ${freenect2_LIBRARIES})
+
+    # Include directories to get freenect headers
+    include_directories($ENV{HOME}/freenect2/include)
+
+    # Link freenect libraries with the project
+    #target_link_libraries(${PROJECT_NAME} ${freenect2_LIBRARIES})
 endif()
 
 option(WITH_FREETYPE_GL_CPP "Enable drawing of labels" OFF)

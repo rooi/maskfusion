@@ -132,7 +132,7 @@ source python-environment/bin/activate
 pip3 install pip --upgrade
 pip3 install tensorflow-gpu==1.8.0
 pip3 install scikit-image
-pip3 install keras
+pip3 install keras==2.1.2
 pip3 install IPython
 pip3 install h5py
 pip3 install cython
@@ -267,7 +267,8 @@ if [[ $* == *--build-dependencies* ]] ; then
   cmake \
     -DOpenCV_DIR="${OpenCV_DIR}" \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCUDA_HOST_COMPILER=/usr/bin/gcc \
+    -DCUDA_HOST_COMPILER=/usr/bin/gcc-4.9 \
+    -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-9.0 \
     -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -D_FORCE_INLINES" \
     ..
   make -j8
@@ -308,8 +309,11 @@ cmake \
   -DOpenCV_DIR="$(pwd)/../deps/opencv/build" \
   -DPangolin_DIR="$(pwd)/../deps/Pangolin/build/src" \
   -DMASKFUSION_PYTHON_VE_PATH="$(pwd)/../python-environment" \
-  -DCUDA_HOST_COMPILER=/usr/bin/gcc \
-  -DWITH_FREENECT2=OFF \
+  -DCUDA_HOST_COMPILER=/usr/bin/gcc-4.9 \
+  -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-9.0 \
+  -DWITH_FREENECT2=ON \
+  -DMASKFUSION_NUM_GSURFELS="943718" \
+  -DMASKFUSION_NUM_OSURFELS="104857" \
   ..
 make -j8
 cd ..
